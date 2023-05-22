@@ -1,27 +1,24 @@
+/*Consts Settings*/
+const mario = document.querySelector('.mario');
+const pipe = document.querySelector('.pipe');
 
+
+/*Jump Settings*/
 const jump = () => {
     mario.classList.add('jump');
-
-    audioJump.currentTime = 0.1;
-    audioJump.volume = 0.1;
-    audioJump.play();
 
     setTimeout(() => {
         mario.classList.remove('jump');
     }, 500);
 }
 
+
+/*Loop Settings*/
 const loop = setInterval(() => {
-
-    console.log('loop')
-
     const pipePosition = pipe.offsetLeft;
     const marioPosition = +window.getComputedStyle(mario).bottom.replace('px', '');
 
-    console.log(marioPosition);
-
     if (pipePosition <= 120 && pipePosition > 0 && marioPosition < 80) {
-        
         pipe.style.animation = 'none';
         pipe.style.left = `${pipePosition}px`;
 
@@ -30,9 +27,17 @@ const loop = setInterval(() => {
 
         mario.src = './images/game-over.png';
         mario.style.width = '75px';
-        mario.style.marginLeft = '50px';
-    } 
-    
-},10);
+        mario.style.marginLeft = '50px'
 
-    document.addEventListener('keydown', jump);
+        gameOver.currentTime = 0.1;
+        gameOver.volume = 0.2;
+        gameOver.play();
+
+        clearInterval(loop);
+    }
+}, 10);
+
+
+/*Keydown*/
+document.addEventListener('keydown', jump);
+
